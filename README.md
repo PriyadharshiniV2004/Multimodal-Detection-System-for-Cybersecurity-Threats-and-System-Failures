@@ -9,18 +9,48 @@ This project presents a unified deep learning-based system that detects DDoS att
 - Classification of cyber threats and system anomalies with high accuracy
 - Trained on simulated datasets with approximately 99.93% training and 91.78% validation accuracy
 
+---
+
+### 📂 Datasets & Preprocessing
+1. **DDoS Dataset (CSV)**  
+   - Selected features like packet lengths and flow duration.  
+   - Label encoding: `0 = normal`, `1 = DDoS`.  
+   - Normalized using `StandardScaler`.
+
+2. **Malware Dataset (JSONL)**  
+   - Features: `histogram_0`, `histogram_1`, `entropy`, `string_length_average`.  
+   - Label encoding: `0 = benign`, `1 = malware`.  
+   - Applied feature extraction from nested JSON fields.
+
+3. **System Failure Dataset (CSV)**  
+   - Features: `event_id`, `resource_usage`.  
+   - Labels: `0 = normal`, `1 = failure`.  
+   - Null values handled using median imputation.
+
+---
+
 ## Model Architecture
 
-- Three parallel branches for DDoS, Malware, and System logs  
-- Each branch: Conv1D → LSTM → Dense  
-- Merged via concatenation  
-- Final Dense (softmax) output layer for classification
+- Inputs: 3 separate branches (one for each dataset).
+- Layers:
+  - Conv1D → LSTM → Dense (for each input).
+  - Merged and passed through a `Dense(3, activation='softmax')` layer.
+- Outputs: Multi-class predictions across DDoS, malware, and system failure events.
 
-## Datasets Used
+---
 
-- DDoS: DrDoS_UDP (flow-based network data)  
-- Malware: EMBER dataset (histograms, entropy, string features)  
-- System Failures: Windows logs (event ID, CPU, RAM usage)
+### ⚙️ Model Fusion & Balancing
+- **Oversampling**: Upsampled smaller datasets to match the largest.
+- **Padding**: Standardized feature dimensions using `pad_sequences`.
+- Combined all datasets into a unified input `X_combined` and label set `y_combined`.
+
+---
+
+### 🧪 Training & Evaluation
+- Model: Deep neural network with dropout layers to reduce overfitting.
+- Loss: `binary_crossentropy`; Optimizer: `Adam` with `clipnorm`.
+- Accuracy: ~99.9% (train), ~91.7% (validation).
+- Tested on random samples using a custom prediction method.
 
 ## Results
 
@@ -38,6 +68,8 @@ This project presents a unified deep learning-based system that detects DDoS att
 
 ## Output Files
 
+- Saved as `.h5` and `.pkl` model files for reuse.
+- Final shape: `X_combined: (2551041, 5, 1)` and `y_combined: (2551041, 1)`.
 - `IT_HACKATHON.h5` – Trained Keras model (HDF5 format)
 
 ## Future Enhancements
@@ -45,11 +77,11 @@ This project presents a unified deep learning-based system that detects DDoS att
 - Replace mock data with real-world cybersecurity datasets
 - Extend detection to include zero-day threats and anomalies
 - Explore GRU or Transformer-based variants for further improvement
-
+  
 ## Author
 
 Priyadharshini V
 
 ## Collaborators
 
-PraveenKumar G
+PraveenKumar_Gunasekaran
