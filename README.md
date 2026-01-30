@@ -49,3 +49,7 @@ This project presents a unified deep learning-based system that detects DDoS att
 ## Author
 
 Priyadharshini V
+
+## Collaborators
+
+PraveenKumar G
