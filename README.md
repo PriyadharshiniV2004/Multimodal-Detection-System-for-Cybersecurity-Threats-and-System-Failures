@@ -70,7 +70,8 @@ This project presents a unified deep learning-based system that detects DDoS att
 
 - Saved as `.h5` and `.pkl` model files for reuse.
 - Final shape: `X_combined: (2551041, 5, 1)` and `y_combined: (2551041, 1)`.
-- `IT_HACKATHON.h5` – Trained Keras model (HDF5 format)
+- `Multimodal_Cybersecurity_Detection.h5` – Trained Keras model (HDF5 format)
+- `Multimodal_Cybersecurity_Detection.pkl` – pickle format
 
 ## Future Enhancements
 
